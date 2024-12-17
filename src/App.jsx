@@ -5,7 +5,7 @@ import { TodoList } from "./TodoList";
 
 export default function App() {
   const [todos, setTodo] = useState([]);
-  function toggleId(id, completed) {
+  function toggleTodo(id, completed) {
     setTodo((currentTodo) => {
       return currentTodo.map((todo) => {
         if (todo.id === id) {
@@ -35,7 +35,7 @@ export default function App() {
     <>
       <NewTodoForm onSubmit={addTodo} />
       <h1>Todo List</h1>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deletTodo} />
     </>
   );
 }
