@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import { NewTodoForm } from "./NewTodoForm";
 import { TodoList } from "./TodoList";
 
 export default function App() {
-  const [todos, setTodo] = useState([]);
+  const [todos, setTodo] = useState(() => {
+    const localValue = localStorage.getItem("ITEMS");
+    if (localValue == null) return [];
+    return JSON.parse(localValue);
+  });
   function toggleTodo(id, completed) {
     setTodo((currentTodo) => {
       return currentTodo.map((todo) => {
@@ -15,6 +19,10 @@ export default function App() {
       });
     });
   }
+
+  useEffect(() => {
+    localStorage.setItem("ITEMS", JSON.stringify(todos));
+  }, [todos]);
 
   function addTodo(title) {
     setTodo((currentTodo) => {
